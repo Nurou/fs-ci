@@ -1,0 +1,7 @@
+Static analysis is common with Python project pipelines - these includes tools such as formatters, linters and static vulnerability analysers. The static analysis can be set to run with the help of pre-commit git hooks, which run the tools whenever a git commit is made. A popular tool for managing git hooks is Husky.
+
+A popular library for linting Python code is flake8, with alternatives including pylama and prospector. For formatting, Black is prevalent. Also, Mypy package can also be added for optional type checking. As for unit testing, pytest seems to be the go-to runner for them. 
+
+Some projects notch continous integration up a level and build a Docker image and perform smoke tests on it. If a project contains multiple docker images, Kubernetes can be used for orchestration, often along with Terraform for managing the cloud infrastructure. 
+
+One alternative to Jenkins and GitHub actions is CircleCI, which supports multiple languages besides Python. Since set ups for most projects can be assumed to be modest, mainly for static analysis and tests, a cloud-based environment would probably be the most suitable. However, if the project is a more complex one, a self-hosted solution might be required to overcome the limitations of a cloud-based environment, such as GitHUb actions.
