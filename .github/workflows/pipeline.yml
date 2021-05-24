@@ -26,6 +26,7 @@ jobs:
           heroku_app_name: "fs-pokemon-ci" #Must be unique in Heroku
           heroku_email: "joel.nhn@gmail.com" 
           healthcheck: "https://fs-pokemon-ci.herokuapp.com/health"
+          checkstring: "ok"
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
