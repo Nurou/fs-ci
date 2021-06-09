@@ -1,2 +1,1 @@
-hello from pr
-2
+make sure deployment not ran when unmerged
