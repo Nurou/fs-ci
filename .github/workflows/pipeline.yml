@@ -32,6 +32,7 @@ jobs:
           healthcheck: 'https://fs-pokemon-ci.herokuapp.com/health'
           checkstring: 'ok'
           rollbackonhealthcheckfailed: true
+      - if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.33.0
         env:
