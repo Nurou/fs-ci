@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
 
 jobs:
   simple_deployment_pipeline:
@@ -21,6 +24,7 @@ jobs:
         run: npm run test
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        if: ${{ github.event_name == 'push' }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'fs-pokemon-ci' #Must be unique in Heroku
@@ -33,9 +37,9 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
       #     command: npm run test:e2e
       #     start: npm run start-prod
+      #     wait-on: http://localhost:5000
