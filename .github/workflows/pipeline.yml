@@ -1,47 +1,47 @@
-name: Deployment pipeline
+# name: Deployment pipeline
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize]
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches: [main]
+#     types: [opened, synchronize]
 
-jobs:
-  simple_deployment_pipeline:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: npm install
-        run: npm install
-      - name: lint
-        run: npm run eslint
-      - name: test
-        run: npm run test
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        if: ${{ github.event_name == 'push' }}
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: 'fs-pokemon-ci' #Must be unique in Heroku
-          heroku_email: 'joel.nhn@gmail.com'
-          healthcheck: 'https://fs-pokemon-ci.herokuapp.com/health'
-          checkstring: 'ok'
-          rollbackonhealthcheckfailed: true
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.33.0
-        if: ${{ github.event_name == 'push' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          INITIAL_VERSION: 0.0.5
-      # - name: e2e tests
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     command: npm run test:e2e
-      #     start: npm run start-prod
-      #     wait-on: http://localhost:5000
+# jobs:
+#   simple_deployment_pipeline:
+#     runs-on: ubuntu-18.04
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: '12.x'
+#       - name: npm install
+#         run: npm install
+#       - name: lint
+#         run: npm run eslint
+#       - name: test
+#         run: npm run test
+#       - uses: actions/checkout@v2
+#       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+#         if: ${{ github.event_name == 'push' }}
+#         with:
+#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+#           heroku_app_name: 'fs-pokemon-ci' #Must be unique in Heroku
+#           heroku_email: 'joel.nhn@gmail.com'
+#           healthcheck: 'https://fs-pokemon-ci.herokuapp.com/health'
+#           checkstring: 'ok'
+#           rollbackonhealthcheckfailed: true
+#       - name: Bump version and push tag
+#         uses: anothrNick/github-tag-action@1.33.0
+#         if: ${{ github.event_name == 'push' }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           WITH_V: true
+#           INITIAL_VERSION: 0.0.5
+#       # - name: e2e tests
+#       #   uses: cypress-io/github-action@v2
+#       #   with:
+#       #     command: npm run test:e2e
+#       #     start: npm run start-prod
+#       #     wait-on: http://localhost:5000
