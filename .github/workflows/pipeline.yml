@@ -37,6 +37,8 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          INITIAL_VERSION: 0.0.5
       # - name: e2e tests
       #   uses: cypress-io/github-action@v2
       #   with:
