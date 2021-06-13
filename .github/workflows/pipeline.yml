@@ -23,8 +23,8 @@ jobs:
       - name: test
         run: npm run test
       - uses: actions/checkout@v2
-      - if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'fs-pokemon-ci' #Must be unique in Heroku
@@ -32,12 +32,11 @@ jobs:
           healthcheck: 'https://fs-pokemon-ci.herokuapp.com/health'
           checkstring: 'ok'
           rollbackonhealthcheckfailed: true
-      - if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
-        name: Bump version and push tag
+      - name: Bump version and push tag
         uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
+        if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
           INITIAL_VERSION: 0.0.69
       - name: success status notifications
         uses: 8398a7/action-slack@dcc8c8e9dd8802e21a712dc0c003db97b42efe43
