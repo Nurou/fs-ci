@@ -37,6 +37,7 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
           WITH_V: false
           INITIAL_VERSION: 0.0.77
       - name: success status notifications
