@@ -1,0 +1,14 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  health_check:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: ping URL
+        uses: jtalk/url-health-check-action@v1.5
+        with:
+          url: https://fs-pokemon-ci.herokuapp.com/health

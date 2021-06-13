@@ -37,7 +37,8 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
+          WITH_V: false
+          INITIAL_VERSION: 0.0.77
       - name: success status notifications
         uses: 8398a7/action-slack@dcc8c8e9dd8802e21a712dc0c003db97b42efe43
         if: ${{ ( success() || failure() ) }}
